@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const saveBtn = document.getElementById('saveBtn');
+  const saveTxtBtn = document.getElementById('saveTxtBtn');
+  const saveMdBtn = document.getElementById('saveMdBtn');
   const status = document.getElementById('status');
 
   function showStatus(message, type) {
@@ -11,8 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
     status.className = 'status';
   }
 
-  saveBtn.addEventListener('click', async function() {
-    saveBtn.disabled = true;
+  function setButtonsDisabled(disabled) {
+    saveTxtBtn.disabled = disabled;
+    saveMdBtn.disabled = disabled;
+  }
+
+  async function handleSave(format) {
+    setButtonsDisabled(true);
     showStatus('Extraindo transcrição...', 'loading');
 
     try {
@@ -22,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Check if we're on Udemy
       if (!tab.url || !tab.url.includes('udemy.com')) {
         showStatus('❌ Esta extensão funciona apenas em páginas da Udemy.', 'error');
-        saveBtn.disabled = false;
+        setButtonsDisabled(false);
         return;
       }
 
@@ -36,8 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (result.success) {
         // Create and download the file
-        downloadTranscript(result.transcript, result.title);
-        showStatus(`✅ Transcrição salva com sucesso! (${result.lines} linhas)`, 'success');
+        downloadTranscript(result.transcript, result.title, format);
+        const formatLabel = format === 'md' ? 'Markdown' : 'TXT';
+        showStatus(`✅ Transcrição salva em ${formatLabel}! (${result.lines} linhas)`, 'success');
       } else {
         showStatus('❌ ' + result.error, 'error');
       }
@@ -46,19 +53,38 @@ document.addEventListener('DOMContentLoaded', function() {
       showStatus('❌ Erro ao extrair transcrição. Tente novamente.', 'error');
     }
 
-    saveBtn.disabled = false;
-  });
+    setButtonsDisabled(false);
+  }
 
-  function downloadTranscript(text, title) {
+  // Event listeners for both buttons
+  saveTxtBtn.addEventListener('click', () => handleSave('txt'));
+  saveMdBtn.addEventListener('click', () => handleSave('md'));
+
+  function downloadTranscript(text, title, format) {
     // Clean the title for filename
     const cleanTitle = title
       .replace(/[<>:"/\\|?*]/g, '') // Remove invalid filename characters
       .replace(/\s+/g, '_') // Replace spaces with underscores
       .substring(0, 100); // Limit length
 
-    const filename = `${cleanTitle}_transcript.txt`;
+    let content = text;
+    let mimeType = 'text/plain;charset=utf-8';
+    let extension = 'txt';
+
+    if (format === 'md') {
+      // Convert to Markdown format
+      const lines = text.split('\n');
+      const titleLine = lines[0].replace('Título: ', '');
+      const transcriptLines = lines.slice(3); // Skip title, separator, and empty line
+      
+      content = `# ${titleLine}\n\n## Transcrição\n\n${transcriptLines.join('\n\n')}`;
+      mimeType = 'text/markdown;charset=utf-8';
+      extension = 'md';
+    }
+
+    const filename = `${cleanTitle}_transcript.${extension}`;
     
-    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     
     const a = document.createElement('a');

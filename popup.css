@@ -29,6 +29,12 @@ h1 {
   margin-bottom: 20px;
 }
 
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .save-btn {
   width: 100%;
   padding: 14px 20px;
@@ -47,10 +53,20 @@ h1 {
   transition: all 0.2s ease;
 }
 
+.save-btn.btn-secondary {
+  background: linear-gradient(135deg, #2d2f31 0%, #1c1d1f 100%);
+  border: 1px solid #a435f0;
+}
+
 .save-btn:hover {
   background: linear-gradient(135deg, #8710d8 0%, #6a0dad 100%);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(164, 53, 240, 0.4);
+}
+
+.save-btn.btn-secondary:hover {
+  background: linear-gradient(135deg, #3e4143 0%, #2d2f31 100%);
+  border-color: #8710d8;
 }
 
 .save-btn:active {
