@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Udemy Transcript Saver",
+  "version": "1.0",
+  "description": "Salva a transcrição de aulas da Udemy em arquivos .txt",
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

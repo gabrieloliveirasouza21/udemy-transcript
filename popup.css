@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1c1d1f 0%, #2d2f31 100%);
+  color: #fff;
+  min-width: 320px;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #fff;
+  text-align: center;
+}
+
+.description {
+  font-size: 13px;
+  color: #9da3a7;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1c1d1f;
+  background: linear-gradient(135deg, #a435f0 0%, #8710d8 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.save-btn:hover {
+  background: linear-gradient(135deg, #8710d8 0%, #6a0dad 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(164, 53, 240, 0.4);
+}
+
+.save-btn:active {
+  transform: translateY(0);
+}
+
+.save-btn:disabled {
+  background: #3e4143;
+  color: #6a6f73;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-icon {
+  font-size: 16px;
+}
+
+.status {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-align: center;
+  display: none;
+}
+
+.status.success {
+  display: block;
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.status.error {
+  display: block;
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status.loading {
+  display: block;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.instructions {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.instructions p {
+  font-size: 12px;
+  color: #9da3a7;
+  margin-bottom: 10px;
+}
+
+.instructions ol {
+  font-size: 12px;
+  color: #c0c4c8;
+  padding-left: 20px;
+}
+
+.instructions li {
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
