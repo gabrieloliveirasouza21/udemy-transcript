@@ -76,20 +76,12 @@ function extractTranscript() {
     // Try to get the lesson title
     let title = 'udemy_lesson';
     
-    // Try different selectors for the title
-    const titleSelectors = [
-      '[data-purpose="lesson-title"]',
-      '.ud-heading-xl',
-      'h1',
-      '[class*="curriculum-item-title"]'
-    ];
+    // The current lesson has aria-current="true" and the title is in data-purpose="item-title"
+    const titleEl = document.querySelector('li[aria-current="true"] [data-purpose="item-title"]');
     
-    for (const selector of titleSelectors) {
-      const titleEl = document.querySelector(selector);
-      if (titleEl && titleEl.textContent.trim()) {
-        title = titleEl.textContent.trim();
-        break;
-      }
+    if (titleEl && titleEl.textContent.trim()) {
+      // Remove leading numbers like "2. " from the title
+      title = titleEl.textContent.trim().replace(/^\d+\.\s*/, '');
     }
 
     // Check if transcript panel exists
@@ -128,8 +120,8 @@ function extractTranscript() {
       };
     }
 
-    // Join all lines with proper formatting
-    const fullTranscript = `Título: ${title}\n${'='.repeat(50)}\n\n${transcriptLines.join('\n\n')}`;
+    // Join all lines with single line break (no extra spacing)
+    const fullTranscript = `Título: ${title}\n${'='.repeat(50)}\n\n${transcriptLines.join('\n')}`;
 
     return {
       success: true,
