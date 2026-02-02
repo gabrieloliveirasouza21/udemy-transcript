@@ -106,8 +106,7 @@ function extractTranscript() {
     const titleEl = document.querySelector('li[aria-current="true"] [data-purpose="item-title"]');
     
     if (titleEl && titleEl.textContent.trim()) {
-      // Remove leading numbers like "2. " from the title
-      title = titleEl.textContent.trim().replace(/^\d+\.\s*/, '');
+      title = titleEl.textContent.trim();
     }
 
     // Check if transcript panel exists
